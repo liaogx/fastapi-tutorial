@@ -10,7 +10,6 @@ from pydantic import BaseModel
 app = FastAPI()  # 这里不一定是app，名字随意
 
 
-
 class CityInfo(BaseModel):
     province: str
     country: str
