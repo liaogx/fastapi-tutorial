@@ -2,14 +2,18 @@
 # -*- coding:utf-8 -*-
 # __author__ = '__Jack__'
 
+import time
+
 import uvicorn
-from fastapi import FastAPI
-from fastapi.exceptions import RequestValidationError
-from fastapi.responses import PlainTextResponse
-from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 
 from coronavirus import application
-from tutorial import app03, app04, app05, app06
+from tutorial import app03, app04, app05, app06, app08
+
+# from fastapi.exceptions import RequestValidationError
+# from fastapi.responses import PlainTextResponse
+# from starlette.exceptions import HTTPException as StarletteHTTPException
 
 app = FastAPI(
     title='FastAPI Tutorial and Coronavirus Tracker API Docs',
@@ -40,11 +44,34 @@ app = FastAPI(
 #     return PlainTextResponse(str(exc), status_code=400)
 
 
-app.include_router(app03, prefix="/chapter03", tags=['第三章 请求参数和验证'])
-app.include_router(app04, prefix="/chapter04", tags=['第四章 响应处理和FastAPI配置'])
-app.include_router(app05, prefix="/chapter05", tags=['第五章 FastAPI的依赖注入系统'])
-app.include_router(app06, prefix="/chapter06", tags=['第六章 安全、认证和授权'])
-app.include_router(application, prefix="/coronavirus", tags=['新冠病毒疫情跟踪器API'])
+@app.middleware('http')
+async def add_process_time_header(request: Request, call_next):  # call_next将接收request请求最为参数
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    response.headers['X-Process-Time'] = str(process_time)  # 添加自定义的以“X-”开头的请求头
+    return response
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1.tiangolo.com",
+        "https://127.0.0.1.tiangolo.com",
+        "http://127.0.0.1",
+        "http://127.0.0.1:8080",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(app03, prefix='/chapter03', tags=['第三章 请求参数和验证'])
+app.include_router(app04, prefix='/chapter04', tags=['第四章 响应处理和FastAPI配置'])
+app.include_router(app05, prefix='/chapter05', tags=['第五章 FastAPI的依赖注入系统'])
+app.include_router(app06, prefix='/chapter06', tags=['第六章 安全、认证和授权'])
+app.include_router(app08, prefix='/chapter08', tags=['第八章 中间件、CORS、后台任务、测试用例'])
+app.include_router(application, prefix='/coronavirus', tags=['新冠病毒疫情跟踪器API'])
 
 if __name__ == '__main__':
-    uvicorn.run("run:app", host="0.0.0.0", port=8000, reload=True, debug=True, workers=1)
+    uvicorn.run('run:app', host='0.0.0.0', port=8000, reload=True, debug=True, workers=1)
