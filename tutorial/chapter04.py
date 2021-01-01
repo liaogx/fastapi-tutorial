@@ -106,11 +106,7 @@ async def upload_files(files: List[UploadFile] = File(...)):  # 如果要上传�
     return {"filename": files[0].filename, "content_type": files[0].content_type}
 
 
-"""【见coronavirus应用】
-开发COVID-19感染数据查询接口
-FastAPI项目的静态文件配置
-Jinja2模板渲染COVID-19查询页面
-"""
+"""【见main.py】FastAPI项目的静态文件配置"""
 
 """Path Operation Configuration 路径操作配置"""
 
