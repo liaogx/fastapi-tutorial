@@ -2,115 +2,63 @@
 # -*- coding:utf-8 -*-
 # __author__ = '__Jack__'
 
-from fastapi import Request, Depends, BackgroundTasks, APIRouter
-from pydantic import BaseModel
-from sqlalchemy.orm import Session
+from typing import List
 
-
-# from coronavirus.database import engine, SessionLocal, Base
-
-
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from sqlalchemy.orm import Session
 
+from coronavirus import crud, schemas
+from coronavirus.database import engine, Base, SessionLocal
 
 application = APIRouter()
 
-
+# mount表示将某个目录下一个完全独立的应用挂载过来，这个不会在API交互文档中显示
 application.mount('/static', StaticFiles(directory='./coronavirus/static'), name='static')
 templates = Jinja2Templates(directory='./coronavirus/templates')
 
-
-# Base.metadata.create_all(bind=engine)
-
-
-@application.get("/")
-async def index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request, "title": "This is title"})  # {"request": request}是必须的
+Base.metadata.create_all(bind=engine)
 
 
-@application.get("/coronavirus")
-async def coronavirus():
-    """This is a simple tutorial"""
-    return {"message": {"This is another route"}}
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
-# class StockRequest(BaseModel):
-#     symbol: str
-#
-#
-# def get_db():
-#     try:
-#         db = SessionLocal()
-#         yield db
-#     finally:
-#         db.close()
-#
-#
-# @application.get("/")
-# def home(request: Request, forward_pe=None, dividend_yield=None, ma50=None, ma200=None, db: Session = Depends(get_db)):
-#     """
-#     displays the stock screener dashboard / homepage
-#     :return:
-#     """
-#     stocks = db.query(Stock)
-#
-#     if forward_pe:
-#         stocks = stocks.filter(Stock.forward_pe < forward_pe)
-#
-#     if dividend_yield:
-#         stocks = stocks.filter(Stock.dividend_yield > dividend_yield)
-#
-#     if ma50:
-#         stocks = stocks.filter(Stock.price > Stock.ma50)
-#
-#     if ma200:
-#         stocks = stocks.filter(Stock.price > Stock.ma200)
-#
-#     return templates.TemplateResponse("home.html", {
-#         "request": request,
-#         "stocks": stocks
-#     })
-#
-#
-# def fetch_stock_data(id_: int):
-#     """
-#     fetch data from yahoo finance
-#     :param id_:
-#     :return:
-#     """
-#     db = SessionLocal()
-#     stock = db.query(Stock).filter(Stock.id == id_).first()
-#
-#     yahoo_data = yf.Ticker(stock.symbol)
-#
-#     stock.ma50 = yahoo_data.info["fiftyDayAverage"]
-#     stock.ma200 = yahoo_data.info["twoHundredDayAverage"]
-#     stock.price = yahoo_data.info["previousClose"]
-#     stock.forward_pe = yahoo_data.info["forwardPE"]
-#     stock.forward_eps = yahoo_data.info["forwardEps"]
-#     if yahoo_data.info["dividendYield"]:
-#         stock.dividend_yield = yahoo_data.info["dividendYield"] * 100
-#
-#     db.add(stock)
-#     db.commit()
-#
-#
-# @application.post("/stock")
-# async def create_stock(stock_request: StockRequest, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
-#     """
-#     created a stock and stores it in the database
-#     :return:
-#     """
-#     stock = Stock()
-#     stock.symbol = stock_request.symbol
-#
-#     db.add(stock)
-#     db.commit()
-#
-#     background_tasks.add_task(fetch_stock_data, stock.id)
-#
-#     return {
-#         "code": "success",
-#         "message": "stock created"
-#     }
+@application.post("/create_city", response_model=schemas.ReadCity)
+def create_city(city: schemas.CreateCity, db: Session = Depends(get_db)):
+    db_city = crud.get_city_by_name(db, name=city.province)
+    if db_city:
+        raise HTTPException(status_code=400, detail="City already registered")
+    return crud.create_city(db=db, city=city)
+
+
+@application.get("/get_city/{city}", response_model=schemas.ReadCity)
+def get_city(city: str, db: Session = Depends(get_db)):
+    db_city = crud.get_city_by_name(db, name=city)
+    if db_city is None:
+        raise HTTPException(status_code=404, detail="City not found")
+    return db_city
+
+
+@application.get("/get_cities", response_model=List[schemas.ReadCity])
+def get_cities(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    cities = crud.get_cities(db, skip=skip, limit=limit)
+    return cities
+
+
+@application.post("/create_data", response_model=schemas.ReadData)
+def create_data_for_city(city: str, data: schemas.CreateData, db: Session = Depends(get_db)):
+    db_city = crud.get_city_by_name(db, name=city)
+    data = crud.create_city_data(db=db, data=data, city_id=db_city.id)
+    return data
+
+
+@application.get("/get_data", response_model=List[schemas.ReadData])
+def get_data(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    data = crud.get_data(db, skip=skip, limit=limit)
+    return data
