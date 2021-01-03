@@ -4,7 +4,6 @@
 
 from datetime import date as date_
 from datetime import datetime
-from typing import List
 
 from pydantic import BaseModel
 
@@ -21,7 +20,6 @@ class CreateCity(BaseModel):
     country: str
     country_code: str
     country_population: int
-    data: List[CreateData] = []
 
 
 class ReadData(CreateData):
