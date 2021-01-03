@@ -27,7 +27,9 @@ def create_city(db: Session, city: schemas.CreateCity):
     return db_city
 
 
-def get_data(db: Session, skip: int = 0, limit: int = 10):
+def get_data(db: Session, city: str = None, skip: int = 0, limit: int = 10):
+    if city:
+        return db.query(models.Data).filter(models.Data.city.has(province=city))  # 外键关联查询，这里不是像Django ORM那样Data.city.province
     return db.query(models.Data).offset(skip).limit(limit).all()
 
 
