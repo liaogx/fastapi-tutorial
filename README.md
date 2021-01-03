@@ -73,7 +73,7 @@
 
 #### 2.3 Django vs Flask vs FastAPI 三框架大拼比
 
-从开发效率、性能测评、框架生态、社区支持、学习难易程度多个角度对比 Django/Flask/FastAPI。性能评测参考https://www.techempower.com/benchmarks/的Web Framework Benchmarks
+从开发效率、性能测评、框架生态、社区支持、学习难易程度多个角度对比 Django/Flask/FastAPI。性能评测参考 (https://www.techempower.com/benchmarks)[https://www.techempower.com/benchmarks] 的Web Framework Benchmarks
 
 #### 2.4 Starlette，Pydantic 与 FastAPI 框架是什么关系？
 
@@ -333,7 +333,7 @@ FastAPI 项目中 Jinja2 配置，使用 Jinja2 渲染 COVID-19 查询页面，完成前端页面的开
 
 #### 8.7 后台任务更新 COVID-19 数据
 
-先说下 COVID-19 全球数据源的问题，对接https://coronavirus-tracker-api.herokuapp.com/的数据源，后台任务的方式将数据更新到数据表，前端只需要一个点击按钮
+先说下 COVID-19 全球数据源的问题，对接 (https://coronavirus-tracker-api.herokuapp.com)[https://coronavirus-tracker-api.herokuapp.com] 的数据源，后台任务的方式将数据更新到数据表，前端只需要一个点击按钮
 
 #### 8.8 TestClient 编写测试用例
 
