@@ -117,17 +117,4 @@ co_orm = CompanyOrm(
 
 print(CompanyModel.from_orm(co_orm))
 
-print("\033[31m6. --- 错误处理 ---\033[0m")
-
-user_data = {"id": "error", "signup_ts": "2020-12-22 12 22", "friends": [1, 2, 3]}  # id是字符串 是错误的
-
-try:
-    User(**user_data)
-except ValidationError as e:
-    print(e)
-    print("- " * 30)
-    print(e.json())
-    print("- " * 30)
-    print(e.errors())
-
-print("\033[31m7. --- Pydantic支撑的字段类型  ---\033[0m")  # 官方文档：https://pydantic-docs.helpmanual.io/usage/types/
+print("\033[31m6. --- Pydantic支撑的字段类型  ---\033[0m")  # 官方文档：https://pydantic-docs.helpmanual.io/usage/types/

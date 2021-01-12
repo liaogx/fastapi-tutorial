@@ -24,7 +24,7 @@ app = FastAPI(
 )
 
 # mount表示将某个目录下一个完全独立的应用挂载过来，这个不会在API交互文档中显示
-app.mount('/static', StaticFiles(directory='./coronavirus/static'), name='static')  # .mount()不要在分路由APIRouter().mount()调用，模板会报错
+app.mount(path='/static', app=StaticFiles(directory='./coronavirus/static'), name='static')  # .mount()不要在分路由APIRouter().mount()调用，模板会报错
 
 
 # @app.exception_handler(StarletteHTTPException)  # 重写HTTPException异常处理器
@@ -48,7 +48,7 @@ app.mount('/static', StaticFiles(directory='./coronavirus/static'), name='static
 
 
 @app.middleware('http')
-async def add_process_time_header(request: Request, call_next):  # call_next将接收request请求最为参数
+async def add_process_time_header(request: Request, call_next):  # call_next将接收request请求做为参数
     start_time = time.time()
     response = await call_next(request)
     process_time = time.time() - start_time
@@ -59,10 +59,8 @@ async def add_process_time_header(request: Request, call_next):  # call_next将�
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://127.0.0.1.tiangolo.com",
-        "https://127.0.0.1.tiangolo.com",
         "http://127.0.0.1",
-        "http://127.0.0.1:8080",
+        "http://127.0.0.1:8080"
     ],
     allow_credentials=True,
     allow_methods=["*"],
