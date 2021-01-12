@@ -231,9 +231,9 @@ yield 在依赖函数中的作用，讲解数据库连接的案例
 
 图文列举本章节要讲的内容
 
-#### 6.2 OAuth2、OpenID Connect、OpenAPI 介绍
+#### 6.2 OAuth2.0 认证和授权机制讲解
 
-讲解 FastAPI 提供的 OAuth2 认证，基于 OAuth2 的OpenID Connect；什么是 OpenAPI，定义了哪些安全认证的方案
+图文讲解 OAuth2.0 认证的概念和基本流程，四种授权模式
 
 #### 6.3 OAuth2 密码模式和 FastAPI 的 OAuth2PasswordBearer
 
