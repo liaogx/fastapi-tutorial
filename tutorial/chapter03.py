@@ -43,9 +43,9 @@ def filepath(file_path: str):
     return f"The file path is {file_path}"
 
 
-@app03.get("/path/{num}")  # 长度+正则表达式验证，比如长度8-16位，以a开头。其它校验方法看Query类的源码
+@app03.get("/path_/{num}")
 def path_params_validate(
-    num: int = Path(None, title="Your Number", description="不可描述", ge=1, le=10),  # None换成...就变成必填的参数
+    num: int = Path(..., title="Your Number", description="不可描述", ge=1, le=10),
 ):
     return num
 
@@ -77,10 +77,10 @@ def query_params_validate(
 
 
 class CityInfo(BaseModel):
-    name: str = Field(..., example="Beijing")  # example是注解的作用，只不会被验证
+    name: str = Field(..., example="Beijing")  # example是注解的作用，值不会被验证
     country: str
     country_code: str = None  # 给一个默认值
-    country_population: int = Field(default=0, title="人口数量", description="国家的人口数量", ge=800)
+    country_population: int = Field(default=800, title="人口数量", description="国家的人口数量", ge=800)
 
     class Config:
         schema_extra = {
@@ -141,7 +141,7 @@ def nested_models(data: Data):
     return data
 
 
-"""Cookie 参数"""
+"""Cookie 和 Header 参数"""
 
 
 @app03.get("/cookie")  # 效果只能用Postman测试
@@ -149,15 +149,12 @@ def cookie(cookie_id: Optional[str] = Cookie(None)):  # 定义Cookie参数需要
     return {"cookie_id": cookie_id}
 
 
-"""Header 参数"""
-
-
 @app03.get("/header")
 def header(user_agent: Optional[str] = Header(None, convert_underscores=True), x_token: List[str] = Header(None)):
     """
     有些HTTP代理和服务器是不允许在请求头中带有下划线的，所以Header提供convert_underscores属性让设置
     :param user_agent: convert_underscores=True 会把 user_agent 变成 user-agent
-    :param x_token x_token是包含多个值的列表
+    :param x_token: x_token是包含多个值的列表
     :return:
     """
     return {"User-Agent": user_agent, "x_token": x_token}

@@ -9,7 +9,7 @@ from fastapi import Depends, HTTPException, Header
 
 app05 = APIRouter()
 
-"""Dependencies 导入、创建和声明依赖"""
+"""Dependencies 创建、导入和声明依赖"""
 
 
 async def common_parameters(q: Optional[str] = None, page: int = 1, limit: int = 100):

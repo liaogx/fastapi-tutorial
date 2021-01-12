@@ -106,7 +106,7 @@ async def upload_files(files: List[UploadFile] = File(...)):  # 如果要上传�
     return {"filename": files[0].filename, "content_type": files[0].content_type}
 
 
-"""【见main.py】FastAPI项目的静态文件配置"""
+"""【见run.py】FastAPI项目的静态文件配置"""
 
 """Path Operation Configuration 路径操作配置"""
 
