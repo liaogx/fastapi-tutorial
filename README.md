@@ -1,352 +1,336 @@
-## FastAPI ��ܾ���
-> ����Ľ��� FastAPI���������ֿ�������� API �����ĵ�����������ģ���ʹ��
+## FastAPI 框架精讲
+> 整体的介绍 FastAPI，快速上手开发，结合 API 交互文档逐个讲解核心模块的使用
 
 ![drf-tutorial](./coronavirus/static/fastapi-tutorial.png)
 
-������һ�������� Python Web ��ܣ����γ̽��� Hellow World ��ʼ����ͬѧ��ѧϰ FastAPI ��ܵ�����֪ʶ�㡣�ӿ������һ������ ASGI ������ܣ������¿�ʼ����ȫ��  COVID-19 ��Ⱦ���ݲ�ѯΪ���ܳ��������ν��� FastAPI �� API �����ĵ�ʹ�ã����ʹ�� Pydantic ����͹淶���ݸ�ʽ�����ͣ����������������֤��Jinja2 ģ����Ⱦ�� Static ��̬�ļ����ã�FastAPI ����Ӧ���������ã�ͨ������ʾ����������ע��ϵͳ������֪ʶ�����ݿ������� SQLAlchemy ��ʹ�ã����͹���Ӧ��������Ŀ¼�ṹ����ܵİ�ȫ����֤����Ȩ���м��������������Դ������ʵ�֣���̨����Ͳ��������ı�д��
+体验新一代高性能 Python Web 框架，本课程将从 Hello World 开始引导同学们学习 FastAPI 框架的所有知识点。从框架特性一览，到 ASGI 服务介绍，第三章开始会以全球  COVID-19 感染数据查询为功能场景，依次讲解 FastAPI 的 API 交互文档使用，如何使用 Pydantic 定义和规范数据格式、类型，各种请求参数和验证，Jinja2 模板渲染和 Static 静态文件配置，FastAPI 的响应处理和配置，通过代码示例讲解依赖注入系统的所有知识，数据库配置与 SQLAlchemy 的使用，大型工程应该如何设计目录结构。框架的安全、认证、授权，中间件开发，跨域资源共享的实现，后台任务和测试用例的编写。
 
 
 
-### �γ�12�����ļ�����
+### 课程12个核心技术点
 
-1. �˽� FastAPI ������ԣ���� Django/Flask ������
-2. Pydantic ����͹淶���ݸ�ʽ������
-3. ��ζ�����������������֤������·����������ѯ�����������塢cookie��header
-4. Jinja2 ģ����Ⱦ�� Static ��̬�ļ�����
-5. FastAPI �ı������ݴ���������������Ӧģ�͡��ļ�������·���������õ�
-6. ȫ��ѧϰ FastAPI ������ע��ϵͳ
-7. FastAPI �İ�ȫ����֤����Ȩ��OAuth2 ��֤�� JWT ��֤��ʵ��
-8. FastAPI �����ݿ������� SQLAlchemy ORM ��ʹ��
-9. ���͹���Ӧ�����Ŀ¼�ṹ��ƣ���Ӧ�õ��ļ����
-10. FastAPI ���м������
-11. FastAPI �п�����Դ���� CORS ��ԭ����ʵ�ַ�ʽ
-12. ��α�д��̨�κκͲ�������"		
-
-
-
-### �ʺ���Ⱥ
-
-�κ���ѧϰPython������ͬѧ����������Ҫ��Ч����ɸ߲�������������Ŀ��ͬѧ��
+1. 了解 FastAPI 框架特性，相对 Django/Flask 的优势
+2. Pydantic 定义和规范数据格式、类型
+3. 如何定义各种请求参数和验证，包括路径参数、查询参数、请求体、cookie、header
+4. Jinja2 模板渲染和 Static 静态文件配置
+5. FastAPI 的表单数据处理、错误处理、响应模型、文件处理、路径操作配置等
+6. 全面学习 FastAPI 的依赖注入系统
+7. FastAPI 的安全、认证和授权，OAuth2 认证和 JWT 认证的实现
+8. FastAPI 的数据库配置与 SQLAlchemy ORM 的使用
+9. 大型工程应该如何目录结构设计，多应用的文件拆分
+10. FastAPI 的中间件开发
+11. FastAPI 中跨域资源共享 CORS 的原理和实现方式
+12. 如何编写后台任何和测试用例"		
 
 
 
-### �γ�Ч��չʾ
+### 适合人群
 
-1.  ���װ�ǰ��Ч��
+任何想学习Python开发的同学，尤其是需要高效率完成高并发、高性能项目的同学。
+
+
+
+### 课程效果展示
+
+1.  简易版前端效果
 ![drf-tutorial](./coronavirus/static/preview01.png)
-2.  API�����ĵ� - **Swagger UI**
+2.  API交互文档 - **Swagger UI**
 ![drf-tutorial](./coronavirus/static/preview02.png)
-3.  �����µĽӿ�
+3.  第三章的接口
 ![drf-tutorial](./coronavirus/static/preview03.png)
-4.  ���ġ����µĽӿ�
+4.  第四、五章的接口
 ![drf-tutorial](./coronavirus/static/preview04.png)
-5.  �ӿڵĲ��������ص�״̬�롢����
+5.  接口的参数、返回的状态码、描述
 ![drf-tutorial](./coronavirus/static/preview05.png)
-6.  �ӿ���֤��Ч��
+6.  接口认证的效果
 ![drf-tutorial](./coronavirus/static/preview06.png)
-7.  ���ߡ����º�`Coronavirus`Ӧ�õĽӿ�
+7.  第七、八章和`Coronavirus`应用的接口
 ![drf-tutorial](./coronavirus/static/preview07.png)
-8.  ������Ϣ��
+8.  城市信息表
 ![drf-tutorial](./coronavirus/static/preview08.png)
-9.  ��Ⱦ���ݱ�
+9.  感染数据表
 ![drf-tutorial](./coronavirus/static/preview09.png)
 
 
 
-### ��һ�� �γ̽���
+### 第一章 课程介绍
 
-#### 1.1 �γ������뵼ѧ
+#### 1.1 课程内容与导学
 
-���ܱ��γ̵�ѧϰ���ݺ�Ŀ�꣬���ѧϰ���γ̣�չʾ���մ����Ч��������ͬѧ�Ƕ�  FastAPI �����һ���������˽⣬���ܹ��ڿγ̽��������ʹ�� FastAPI ��� RESTful API �ӿڿ�����
+介绍本课程的学习内容和目标，如何学习本课程，展示最终代码和效果，引导同学们对  FastAPI 框架有一个基本的了解，并能够在课程结束后独立使用 FastAPI 完成 RESTful API 接口开发。
 
 
 
-### �ڶ��� FastAPI���ܺ���Ŀ׼��
+### 第二章 FastAPI介绍和项目准备
 
-#### 2.1 ���µ�ѧ
+#### 2.1 本章导学
 
-ͼ���оٱ��½�Ҫ��������
+图文列举本章节要讲的内容
 
-#### 2.2 Ϊʲô���� FastAPI ������� ?
+#### 2.2 为什么新秀 FastAPI 火成这样 ?
 
-���� FastAPI ����Щͻ���ص㣬��������ĵ��е� Feasures һ��
+介绍 FastAPI 有哪些突出特点，浏览官网文档中的 Feasures 一览
 
-#### 2.3 Django vs Flask vs FastAPI ����ܴ�ƴ��
+#### 2.3 Django vs Flask vs FastAPI 三框架大拼比
 
-�ӿ���Ч�ʡ����ܲ����������̬������֧�֡�ѧϰ���׳̶ȶ���ǶȶԱ� Django/Flask/FastAPI����������ο� [https://www.techempower.com/benchmarks](https://www.techempower.com/benchmarks) ��Web Framework Benchmarks
+从开发效率、性能测评、框架生态、社区支持、学习难易程度多个角度对比 Django/Flask/FastAPI。性能评测参考 [https://www.techempower.com/benchmarks](https://www.techempower.com/benchmarks) 的Web Framework Benchmarks
 
-#### 2.4 Starlette��Pydantic �� FastAPI �����ʲô��ϵ��
+#### 2.4 Starlette，Pydantic 与 FastAPI 框架是什么关系？
 
-����  Starlette �Ǹ�ʲô��Ŀ��IDE ����ʱ Python 3.5+ �汾�� "type hints" �ĺô�����̡�ֱ�ۺͱ�׼�� Python �������������� Pydantic ����FastAPI  ��Ŀ�Ŀ���ΪʲôҪʹ�� Pydantic
+介绍  Starlette 是个什么项目；IDE 开发时 Python 3.5+ 版本的 "type hints" 的好处：简短、直观和标准的 Python 类型声明；介绍 Pydantic 包，FastAPI  项目的开发为什么要使用 Pydantic
 
-#### 2.5 Pydantic �����̳�
+#### 2.5 ASGI 服务 Uvicorn 和 Hypercorn 介绍
 
-��д����߽������ģ�ͼ����÷������ݹ�ģ�ͣ��ֶ����ͣ�У�飬ģ��������
+讲解什么是 ASGI 服务，介绍部署 FastAPI 项目需要用到的 Uvicorn 或 Hypercorn
 
-#### 2.6 ASGI ���� Uvicorn �� Hypercorn ����
+#### 2.6 搭建 FastAPI 项目开发环境
 
-����ʲô�� ASGI ���񣬽��ܲ��� FastAPI ��Ŀ��Ҫ�õ��� Uvicorn �� Hypercorn
+使用 Virtualenv 搭建 FastAPI  项目开发环境，安装 FastAPI，Pydantic，Uvicorn 等
 
-#### 2.7 � FastAPI ��Ŀ��������
+#### 2.7 经验分享-Python 项目开发中包的版本问题
 
-ʹ�� Virtualenv � FastAPI  ��Ŀ������������װ FastAPI��Pydantic��Uvicorn ��
+基于之前的课程经验，给同学们重点提示 Python 项目开发中包的版本问题，如何阅读报错信息，怎么解决不同依赖包版本不兼容的问题。
 
-#### 2.8 �������-Python ��Ŀ�����а��İ汾����
+#### 2.8 Pydantic 基础教程
 
-����֮ǰ�Ŀγ̾��飬��ͬѧ���ص���ʾ Python ��Ŀ�����а��İ汾���⣬����Ķ�������Ϣ����ô�����ͬ�������汾�����ݵ����⡣
+边写代码边讲解基本模型及常用方法，递归模型，字段类型，校验，模型类配置
 
-#### 2.9 ����С��&��������Ԥ��
+#### 2.9 本章小结&下章内容预告
 
-�ܽ᱾�µ�֪ʶ�㣬�ع����ѵ㣬��������Ԥ��
+总结本章的知识点，回顾重难点，下章内容预告
 
 
 
-### ������ �����������֤
+### 第三章 请求参数和验证
 
-#### 3.1 ���µ�ѧ
+#### 3.1 本章导学
 
-ͼ���оٱ��½�Ҫ��������
+图文列举本章节要讲的内容
 
-#### 3.2 "hello world" �ӿڸ���˴� COVID-19 ��Ⱦ����
+#### 3.2 "hello world" 接口给后端传 COVID-19 感染数据
 
-��������һ���򵥵� FastAPI ����ʵ�ַ��� "hello world" �Ľӿڣ���һ�����̳� Pydantic �� BaseModel �淶���������ݸ�ʽ�����ͣ�ͨ����ѯ�����������崫�ݳ��С����ڹ��ҡ��Ƿ��и�Ⱦ��������Ϣ������ FastAPI ��ܵĻ�������������ͬ�����첽�����ı�д��װ������URL ·�ɡ�HTTP ����
+首先运行一个简单的 FastAPI 程序，实现返回 "hello world" 的接口；进一步，继承 Pydantic 的 BaseModel 规范请求体数据格式和类型，通过查询参数和请求体传递城市、所在国家、是否有感染病例的信息，讲解 FastAPI 框架的基本开发方法，同步和异步函数的编写、装饰器、URL 路由、HTTP 方法
 
-#### 3.3 FastAPI �� API �����ĵ� - Swagger UI �� ReDoc
+#### 3.3 FastAPI 的 API 交互文档 - Swagger UI 和 ReDoc
 
-������һС�ڿ����Ľӿڹ��ܣ�API �����ĵ�һ����ʹ�÷������ܣ���һ�����õ� API �����ĵ� ReDoc
+接着上一小节开发的接口功能，API 交互文档一览，使用方法介绍；另一个可用的 API 交互文档 ReDoc
 
-#### 3.4 ·�����������ݵĽ�������֤
+#### 3.4 路径参数和数据的解析、验证
 
-·�����������ͣ������飬�Զ���䣬����ת������������֤���������ִ�С��Χ����֤��������������API �����ĵ��д�����ʾ
+路径参数的类型，错误检查，自动填充，数据转换、解析、验证（包括数字大小范围的验证），参数别名，API 交互文档中传参演示
 
-#### 3.5 ��ѯ���������ݵĽ�������֤
+#### 3.5 查询参数和数据的解析、验证
 
-�����ѯ�����Ĵ��η�ʽ������ת������·�������Ͳ�ѯ������ʹ�ã������ѯ������ģ��һ����ѡ������Դ����ѯ����ȫ�� COVID-19 ��Ⱦ���ݵĽӿ�
+讲解查询参数的传参方式，类型转换，多路径参数和查询参数的使用，必填查询参数；模拟一个能选择数据源，查询今日全球 COVID-19 感染数据的接口
 
-#### 3.6 �������Լ���ϲ���
+#### 3.6 请求体以及混合参数
 
-�� Pydantic �� BaseModel �� Field �ඨ�����������ݸ�ʽ�����ͣ���ζ����������壬�������·����������ѯ�����Ļ��ʹ�ã�
+用 Pydantic 的 BaseModel 和 Field 类定义请求体数据格式和类型，如何定义多个请求体，请求体和路径参数，查询参数的混合使用；
 
-#### 3.7 ��ζ������ݸ�ʽǶ�׵������壿
+#### 3.7 如何定义数据格式嵌套的请求体？
 
-ͨ�� Python ��ļ̳У���� typing ��  Pydantic �� Field �࣬��Ƕ�׵�ģ���ඨ�����ݸ�ʽǶ�׵�������
+通过 Python 类的继承，结合 typing 和  Pydantic 的 Field 类，用嵌套的模型类定义数据格式嵌套的请求体
 
-#### 3.8 ����Ĳ������������Ͷ�����Щ��
+#### 3.8 如何设置 Cookie 和 Header 参数？
 
-schema_extra ���Զ������Ĳ�����������������һ������UUID/datetime/frozenset/byetes/Decimal ��
+用 FastAPI 的 Cookie 类实现在后端定义 Cookie 的参数，用 Header 类实现在后端定义请求头的参数，请求头参数自动转换功能介绍，请求头参数中重复的 key 如何处理
 
-#### 3.9 ������� Cookie ������
+#### 3.9 本章小结&下章内容预告
 
-�� FastAPI �� Cookie ��ʵ���ں�˶��� Cookie �Ĳ���
+总结本章的知识点，回顾重难点，下章内容预告
 
-#### 3.10 ������� Header ������
 
-�� FastAPI �� Header ��ʵ���ں�˶�������ͷ�Ĳ���������ͷ�����Զ�ת�����ܽ��ܣ�����ͷ�������ظ��� key ��δ���
 
-#### 3.11 ����С��&��������Ԥ��
+### 第四章 响应处理和FastAPI配置
 
-�ܽ᱾�µ�֪ʶ�㣬�ع����ѵ㣬��������Ԥ��
+#### 4.1 本章导学
 
+图文列举本章节要讲的内容
 
+#### 4.2 响应模型示例精讲
 
-### ������ ��Ӧ������FastAPI����
+响应模型的声明和调用，response_model 指定默认值或响应模型，response_model_exclude_unset、response_model_include和response_model_exclude 参数含义
 
-#### 4.1 ���µ�ѧ
+#### 4.3 响应状态码和快捷属性
 
-ͼ���оٱ��½�Ҫ��������
+status_code 参数定义，fastapi.status 快捷调用响应状态码属性
 
-#### 4.2 ��Ӧģ��ʾ������
+#### 4.4 表单数据处理
 
-��Ӧģ�͵������͵��ã�response_model ָ��Ĭ��ֵ����Ӧģ�ͣ�response_model_exclude_unset��response_model_include��response_model_exclude ��������
+导入 FastAPI 的 Form 类，代码演示如何定义表单参数
 
-#### 4.3 ��Ӧ״̬��Ϳ������
+#### 4.5 单文件、多文件上传及参数详解
 
-status_code �������壬fastapi.status ��ݵ�����Ӧ״̬������
+讲解 File 和 UploadFile 类，及其参数的定义，多文件上传的实现；以解析 COVID-19.csv 文件数据为例
 
-#### 4.4 �������ݴ���
+#### 4.6 FastAPI 项目的静态文件配置
 
-���� FastAPI �� Form �࣬������ʾ��ζ����������
+CSS/JS/IMAGES 静态文件的配置，项目如何找到 Static 文件夹
 
-#### 4.5 ���ļ������ļ��ϴ����������
+#### 4.7 路径操作配置(Path Operation Configuration)
 
-���� File �� UploadFile �࣬��������Ķ��壬���ļ��ϴ���ʵ�֣��Խ��� COVID-19.csv �ļ�����Ϊ��
+Path Operation Configuration的概念，包括 Response Status Code、Tags、Summary and description、文档描述符、响应描述、Deprecate 参数
 
-#### 4.6 FastAPI ��Ŀ�ľ�̬�ļ�����
+#### 4.8 FastAPI 应用的常见配置项
 
-CSS/JS/IMAGES ��̬�ļ������ã���Ŀ����ҵ� Static �ļ���
+配置 FastAPI 应用的标题、描述、版本，tags 的元数据，自定义 OpenAPI 和文档的 URL
 
-#### 4.7 ·����������(Path Operation Configuration)
+#### 4.9 FastAPI 框架的错误处理
 
-Path Operation Configuration�ĸ������ Response Status Code��Tags��Summary and description���ĵ�����������Ӧ������Deprecate ����
+HTTPException 的使用，如何自定义异常处理器；给第六小节开发的 COVID-19 数据查询接口定义异常处理
 
-#### 4.8 FastAPI Ӧ�õĳ���������
+#### 4.10 本章小结&下章内容预告
 
-���� FastAPI Ӧ�õı��⡢�������汾��tags ��Ԫ���ݣ��Զ��� OpenAPI ���ĵ��� URL
+总结本章的知识点，回顾重难点，下章内容预告
 
-#### 4.9 FastAPI ��ܵĴ�����
 
-HTTPException ��ʹ�ã�����Զ����쳣��������������С�ڿ����� COVID-19 ���ݲ�ѯ�ӿڶ����쳣����
 
-#### 4.10 ����С��&��������Ԥ��
+### 第五章 FastAPI的依赖注入系统
 
-�ܽ᱾�µ�֪ʶ�㣬�ع����ѵ㣬��������Ԥ��
+#### 5.1 本章导学
 
+图文列举本章节要讲的内容
 
+#### 5.2 什么是依赖注入系统？
 
-### ������ FastAPI������ע��ϵͳ
+依赖的概率，依赖注入系统的作用，有哪些使用场景
 
-#### 5.1 ���µ�ѧ
+#### 5.3 创建、导入和声明依赖
 
-ͼ���оٱ��½�Ҫ��������
+代码演示如何创建一个依赖，并在其它函数中调用，讲解 FastAPI 对依赖的处理过程
 
-#### 5.2 ʲô������ע��ϵͳ��
+#### 5.4 如何将类作为依赖项？
 
-�����ĸ��ʣ�����ע��ϵͳ�����ã�����Щʹ�ó���
+将前面函数的例子封装成类，举例如何使用类作为依赖项；类型注释与依赖项的区别；依赖类的快捷编写
 
-#### 5.3 �������������������
+#### 5.5 子依赖的创建和调用
 
-������ʾ��δ���һ���������������������е��ã����� FastAPI �������Ĵ�������
+案例讲解多重（嵌套）依赖的调用，父依赖调用子依赖，子依赖再调用另外的子依赖
 
-#### 5.4 FastAPI ʹ������ע�������
+#### 5.6 路径操作装饰器中导入依赖
 
-API �����ĵ������������Ϣ����ʹ�ã�FastAPI�ļ����Ծ���˵������ע��ļ򵥺�ǿ��֮��
+如何在路径操作装饰器中添加多个依赖，依赖的错误、返回值、异常处理
 
-#### 5.5 ��ν�����Ϊ�����
+#### 5.7 FastAPI 框架中全局依赖的使用
 
-��ǰ�溯�������ӷ�װ���࣬�������ʹ������Ϊ���������ע���������������������Ŀ�ݱ�д
+讲解 FastAPI 框架中全局依赖的使用
 
-#### 5.6 �������Ĵ����͵���
+#### 5.8 使用 yield 的依赖和子依赖
 
-����������أ�Ƕ�ף������ĵ��ã��������������������������ٵ��������������
+yield 在依赖函数中的作用，讲解数据库连接的案例
 
-#### 5.7 ·������װ�����е�������
+#### 5.9 本章小结&下章内容预告
 
-�����·������װ���������Ӷ�������������Ĵ��󡢷���ֵ���쳣����
+总结本章的知识点，回顾重难点，下章内容预告
 
-#### 5.8 FastAPI �����ȫ��������ʹ��
 
-���� FastAPI �����ȫ��������ʹ��
 
-#### 5.9 ʹ�� yield ��������������
+### 第六章 安全、认证和授权
 
-yield �����������е����ã��������ݿ����ӵİ���
+#### 6.1 本章导学
 
-#### 5.10 ����С��&��������Ԥ��
+图文列举本章节要讲的内容
 
-�ܽ᱾�µ�֪ʶ�㣬�ع����ѵ㣬��������Ԥ��
+#### 6.2 OAuth2、OpenID Connect、OpenAPI 介绍
 
+讲解 FastAPI 提供的 OAuth2 认证，基于 OAuth2 的OpenID Connect；什么是 OpenAPI，定义了哪些安全认证的方案
 
+#### 6.3 OAuth2 密码模式和 FastAPI 的 OAuth2PasswordBearer
 
-### ������ ��ȫ����֤����Ȩ
+OAuth2 密码模式的认证过程， 继承OAuth2PasswordBearer类，使用 OAuth2 的密码模式，在请求头中携带 Authorization: Bearer your_token 实现认证
 
-#### 6.1 ���µ�ѧ
+#### 6.4 基于 Password 和 Bearer token 的 OAuth2 认证
 
-ͼ���оٱ��½�Ҫ��������
+使用 FastAPI 提供的 OAuth2PasswordBearer 类，开发一个使用密码和 Bear token 的 OAuth2 认证模型，讲解认证原理
 
-#### 6.2 OAuth2��OpenID Connect��OpenAPI ����
+#### 6.5 开发基于 JSON Web Tokens 的认证
 
-���� FastAPI �ṩ�� OAuth2 ��֤������ OAuth2 ��OpenID Connect��ʲô�� OpenAPI����������Щ��ȫ��֤�ķ���
+JSON Web Tokens介绍，安装 python-jose 和 passlib，实现 JWT 认证，用户登录后才能查询 COVID-19 感染数据；在 API 交互文档中测试实现效果
 
-#### 6.3 OAuth2 ����ģʽ�� FastAPI �� OAuth2PasswordBearer
+#### 6.6 本章小结&下章内容预告
 
-OAuth2 ����ģʽ����֤���̣� �̳�OAuth2PasswordBearer�࣬ʹ�� OAuth2 ������ģʽ��������ͷ��Я�� Authorization: Bearer your_token ʵ����֤
+总结本章的知识点，回顾重难点，下章内容预告
 
-#### 6.4 ���� Password �� Bearer token �� OAuth2 ��֤
 
-ʹ�� FastAPI �ṩ�� OAuth2PasswordBearer �࣬����һ��ʹ������� Bear token �� OAuth2 ��֤ģ�ͣ�������֤ԭ��
 
-#### 6.5 �������� JSON Web Tokens ����֤
+### 第七章 FastAPI的数据库操作和多应用的目录结构设计
 
-JSON Web Tokens���ܣ���װ python-jose �� passlib��ʵ�� JWT ��֤���û���¼����ܲ�ѯ COVID-19 ��Ⱦ���ݣ��� API �����ĵ��в���ʵ��Ч��
+#### 7.1 本章导学
 
-#### 6.6 ����С��&��������Ԥ��
+图文列举本章节要讲的内容
 
-�ܽ᱾�µ�֪ʶ�㣬�ع����ѵ㣬��������Ԥ��
+#### 7.2 FastAPI 项目中配置 SQLAlchemy ORM
 
+SQLAlchemy ORM 介绍，FastAPI 项目中如何配置SQLite数据库，应用的文件结构
 
+#### 7.3 SQLAlchemy 开发 COVID-19 模型类
 
-### ������ FastAPI�����ݿ�����Ͷ�Ӧ�õ�Ŀ¼�ṹ���
+开发 COVID-19 的城市和感染数据模型类，讲解模型类中各字段和字段属性
 
-#### 7.1 ���µ�ѧ
+#### 7.4 使用 Pydantic 建立与模型类对应的数据格式类
 
-ͼ���оٱ��½�Ҫ��������
+对于上一小节开发的城市和感染数据模型类，继承 pydantic.BaseModel 分别开发对应的创建和读取数据的数据格式类
 
-#### 7.2 FastAPI ��Ŀ������ SQLAlchemy ORM
+#### 7.5 把创建和查询 COVID-19 数据封装成函数
 
-SQLAlchemy ORM ���ܣ�FastAPI ��Ŀ���������SQLite���ݿ⣬Ӧ�õ��ļ��ṹ
+创建 crud.py 把创建和查询 COVID-19 数据封装成函数，在函数中通过SQLAlchemy ORM实现对SQLite的CRUD操作
 
-#### 7.3 SQLAlchemy ���� COVID-19 ģ����
+#### 7.6 开发 COVID-19 感染数据查询接口
 
-���� COVID-19 �ĳ��к͸�Ⱦ����ģ���࣬����ģ�����и��ֶκ��ֶ�����
+调用上一小节的函数，实现创建城市，查询城市信息和各个城市每日感染病例数据的接口
 
-#### 7.4 ʹ�� Pydantic ������ģ�����Ӧ�����ݸ�ʽ��
+#### 7.7 Jinja2 模板渲染前端页面
 
-������һС�ڿ����ĳ��к͸�Ⱦ����ģ���࣬�̳� pydantic.BaseModel �ֱ𿪷���Ӧ�Ĵ����Ͷ�ȡ���ݵ����ݸ�ʽ��
+FastAPI 项目中 Jinja2 配置，使用 Jinja2 渲染 COVID-19 查询页面，完成前端页面的开发
 
-#### 7.5 �Ѵ����Ͳ�ѯ COVID-19 ���ݷ�װ�ɺ���
+#### 7.8 大型工程的目录结构设计 - 应用文件拆分
 
-���� crud.py �Ѵ����Ͳ�ѯ COVID-19 ���ݷ�װ�ɺ������ں�����ͨ��SQLAlchemy ORMʵ�ֶ�SQLite��CRUD����
+对于大型项目，很多的应用应该如何组织目录结构；APIRouter 使不同应用文件更加清晰，便于维护
 
-#### 7.6 ���� COVID-19 ��Ⱦ���ݲ�ѯ�ӿ�
+#### 7.9 本章小结&下章内容预告
 
-������һС�ڵĺ�����ʵ�ִ������У���ѯ������Ϣ�͸�������ÿ�ո�Ⱦ�������ݵĽӿ�
+总结本章的知识点，回顾重难点，下章内容预告
 
-#### 7.7 Jinja2 ģ����Ⱦǰ��ҳ��
 
-FastAPI ��Ŀ�� Jinja2 ���ã�ʹ�� Jinja2 ��Ⱦ COVID-19 ��ѯҳ�棬���ǰ��ҳ��Ŀ���
 
-#### 7.8 ���͹��̵�Ŀ¼�ṹ��� - Ӧ���ļ����
+### 第八章 中间件、CORS、后台任务、测试用例
 
-���ڴ�����Ŀ���ܶ��Ӧ��Ӧ�������֯Ŀ¼�ṹ��APIRouter ʹ��ͬӦ���ļ���������������ά��
+#### 8.1 本章导学
 
-#### 7.9 ����С��&��������Ԥ��
+图文列举本章节要讲的内容
 
-�ܽ᱾�µ�֪ʶ�㣬�ع����ѵ㣬��������Ԥ��
+#### 8.2 中间件的概念和开发示例
 
+中间件的概念，对 request 和 response 的处理流程，需要中间件开发的场景；使用 app.middleware("http") 装饰器创建一个中间件，在响应头中加上对每个 request 处理时间的键值对，演示response前后的处理
 
+#### 8.3 跨域资源共享 CORS 的原理
 
-### �ڰ��� �м����CORS����̨���񡢲�������
+域的概念（协议、域名、端口），什么是跨域、跨域资源共享
 
-#### 8.1 ���µ�ѧ
+#### 8.4 FastAPI 的 CORSMiddleware 实现 CORS
 
-ͼ���оٱ��½�Ҫ��������
+讲解 FastAPI 的 CORSMiddleware 开发方法，其支持的参数以及含义
 
-#### 8.2 �м���ĸ��������
+#### 8.5 实现类似 Celery 的后台任务
 
-�м���ĸ���� request �� response �Ĵ������̣���Ҫ�м�������ĳ���
+后台任务的使用场景，开发一个简单的后台任务，通过函数参数或依赖注入导入后台任务
 
-#### 8.3 һ���м������ʾ��
+#### 8.6 后台任务更新 COVID-19 数据
 
-ʹ�� app.middleware("http") װ��������һ���м��������Ӧͷ�м��϶�ÿ�� request ����ʱ��ļ�ֵ�ԣ���ʾresponseǰ��Ĵ���
+先说下 COVID-19 全球数据源的问题，对接 [https://coronavirus-tracker-api.herokuapp.com](https://coronavirus-tracker-api.herokuapp.com) 的数据源，后台任务的方式将数据更新到数据表，前端只需要一个点击按钮
 
-#### 8.4 ������Դ���� CORS ��ԭ��
+#### 8.7 TestClient 编写测试用例
 
-��ĸ��Э�顢�������˿ڣ���ʲô�ǿ��򡢿�����Դ����
+用 FastAPI 的 TestClient 编写3个简单的测试用例，测试上一小节的后台任务接口；讲解测试用例的开发思路
 
-#### 8.5 FastAPI �� CORSMiddleware ʵ�� CORS
+#### 8.8 本章小结
 
-���� FastAPI �� CORSMiddleware ������������֧�ֵĲ����Լ�����
+总结本章的知识点，回顾重难点
 
-#### 8.6 ʵ������ Celery �ĺ�̨����
 
-��̨�����ʹ�ó���������һ���򵥵ĺ�̨����ͨ����������������ע�뵼���̨����
 
-#### 8.7 ��̨������� COVID-19 ����
+### 第九章 课程总结
 
-��˵�� COVID-19 ȫ������Դ�����⣬�Խ� [https://coronavirus-tracker-api.herokuapp.com](https://coronavirus-tracker-api.herokuapp.com) ������Դ����̨����ķ�ʽ�����ݸ��µ����ݱ���ǰ��ֻ��Ҫһ�������ť
+#### 9.1 课程总结
 
-#### 8.8 TestClient ��д��������
-
-�� FastAPI �� TestClient ��д3���򵥵Ĳ���������������һС�ڵĺ�̨����ӿڣ�������������Ŀ���˼·
-
-#### 8.9 ����С��
-
-�ܽ᱾�µ�֪ʶ�㣬�ع����ѵ�
-
-
-
-### �ھ��� �γ��ܽ�
-
-#### 9.1 �γ��ܽ�
-
-�ع˿γ����������ѵ㣬�ܽᾭ�顢�ĵ��Լ���չ���顣
+回顾课程内容与重难点，总结经验、心得以及扩展建议。
